@@ -9,11 +9,22 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
 #define MAX_NAME_SIZE 30
+#define MAX_RECIPE_LENGTH 1000
+#define MAX_RECIPES 100
+
+typedef struct {
+    int recipe_number;
+    int total_recipes;
+    char recipe_name[MAX_NAME_SIZE];
+    char recipe[];
+} Recipe;
 
 void recipe_list();
-void add_recipe(char recipename);
+void add_recipe();
 void delete_recipe(int recipe_numb);
 void update_recipe(int recipe_numb);
 void display_single_recipe(int recipe_numb);

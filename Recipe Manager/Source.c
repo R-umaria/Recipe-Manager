@@ -12,7 +12,7 @@ int main() {
 
 	int choice;
 	do {
-		printf("::----------  Recipe Manager  ----------::\n\n");
+		printf("\n::----------  Recipe Manager  ----------::\n\n");
 		printf("\t\tMain Menu\n");
 		printf("  \t1. add a new recipe\n");
 		printf("  \t2. delete an existing recipe\n");
@@ -30,14 +30,11 @@ int main() {
         int recipe_numb;
 
         switch (choice) {
-        case '1':
-
-            printf("Enter the name of New Recipe:");
-            scanf("%s", &recipe_name);
-            add_recipe(recipe_name);
+        case 1:         
+            add_recipe();
             break;
 
-        case '2':
+        case 2:
             recipe_list();
             printf("Enter the recipe number to delete: ");
             scanf_s("%d", &recipe_numb);
@@ -45,37 +42,38 @@ int main() {
             delete_recipe(recipe_numb);
             break;
 
-        case '3':
+        case 3:
             recipe_list();
             printf("Enter the recipe number to update: ");
             scanf_s("%d", &recipe_numb);
             update_recipe(recipe_numb);
             break;
 
-        case '4':
+        case 4:
             recipe_list();
             printf("Enter the recipe number to Display: ");
             scanf_s("%d", &recipe_numb);
             display_single_recipe(recipe_numb);
             break;
 
-        case '5':
+        case 5:
             display_range_recipe(); //don't know what exactly it will do
             break;
 
-        case '6':
+        case 6:
             display_all_recipe();
             break;
 
-        case '7':
+        case 7:
             search_recipe();
             break;
 
-        case '0':
+        case 0:
             printf("\nExiting the program...\n");
             break;
         default:
             printf("Invalid choice!\n");
+            break;
         }
 	} while (choice != 0);
 	return 0;
