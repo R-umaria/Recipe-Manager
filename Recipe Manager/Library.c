@@ -163,8 +163,57 @@ void update_recipe(int recipe_numb) {
     return 0;
 }
 void display_single_recipe(int recipe_numb) {
-    return 0;
+    char recipe_name[MAX_NAME_SIZE];
+    FILE* recipe_list_file = fopen("recipe_list.txt", "r");
+
+    if (recipe_list_file != NULL) {
+        int current_recipe_number;
+        int total_recipes;
+        fscanf(recipe_list_file, "%d", &total_recipes);
+
+        // Check if the entered recipe number is valid
+        if (recipe_numb < 1 || recipe_numb > total_recipes) {
+            printf("\nInvalid recipe number. Please enter a valid recipe number.\n");
+            fclose(recipe_list_file);
+            return;
+        }
+
+        // Find the recipe name corresponding to the entered recipe number
+        while (fscanf(recipe_list_file, "%d %[^\n]", &current_recipe_number, recipe_name) == 2) {
+            if (current_recipe_number == recipe_numb) {
+                break;
+            }
+        }
+
+        fclose(recipe_list_file);
+
+        char filename[MAX_NAME_SIZE];
+        sprintf(filename, "%s.txt", recipe_name);
+
+        FILE* recipe_file = fopen(filename, "r");
+
+        if (recipe_file != NULL) {
+            printf("\n::----------  Recipe Details for %s  ----------::\n\n", recipe_name);
+
+            char recipe_steps[MAX_RECIPE_LENGTH];
+
+            // Read and print each line in the file
+            while (fgets(recipe_steps, sizeof(recipe_steps), recipe_file) != NULL) {
+                printf("%s", recipe_steps);
+            }
+
+            printf("\n::----------------------------------------------::\n");
+            fclose(recipe_file);
+        }
+        else {
+            printf("\nError reading the recipe file!\n");
+        }
+    }
+    else {
+        printf("\nError reading recipe_list.txt!\n");
+    }
 }
+
 void display_range_recipe() {
     return 0;
 }
