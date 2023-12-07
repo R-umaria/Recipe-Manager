@@ -294,8 +294,21 @@ void display_single_recipe(int recipe_numb) {
 }
 
 void display_range_recipe() {
-    return 0;
+    int start_recipe, end_recipe;
+
+    // Get the range of recipe numbers
+    printf("Enter the start recipe number: ");
+    scanf_s("%d", &start_recipe);
+    printf("Enter the end recipe number: ");
+    scanf_s("%d", &end_recipe);
+
+    // Display recipes within the specified range
+    for (int recipe_numb = start_recipe; recipe_numb <= end_recipe; ++recipe_numb) {
+        display_single_recipe(recipe_numb);
+    }
 }
+
+
 void display_all_recipes() {
     FILE* recipe_list_file = fopen("recipe_list.txt", "r");
 
