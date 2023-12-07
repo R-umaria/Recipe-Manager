@@ -20,14 +20,13 @@ typedef struct {
     int recipe_number;
     int total_recipes;
     char recipe_name[MAX_NAME_SIZE];
-    char recipe[];
 } Recipe;
 
 void recipe_list();
 void add_recipe();
-void delete_recipe(int recipe_numb);
+void delete_recipe();
 void update_recipe(int recipe_numb);
 void display_single_recipe(int recipe_numb);
 void display_range_recipe();
-void display_all_recipe();
+void display_all_recipes();
 void search_recipe();

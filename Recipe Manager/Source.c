@@ -8,38 +8,38 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "Header.h"
 
-int main() {
+Recipe recipe[MAX_RECIPES];
 
-	int choice;
-	do {
-		printf("\n::----------  Recipe Manager  ----------::\n\n");
-		printf("\t\tMain Menu\n");
-		printf("  \t1. add a new recipe\n");
-		printf("  \t2. delete an existing recipe\n");
-		printf("  \t3. update an existing recipe\n");
-		printf("  \t4. display single recipe\n");
-		printf("  \t5. display range recipe\n");
-		printf("  \t6. display all recipe\n");
-		printf("  \t7. search for recipe\n");
-		printf("  \t0. Exit\n");
-		printf("------------------------------------------\n");
-		printf("Enter your Choice: ");
-		scanf_s("%d", &choice);
+int main() {
+    // Initialize the total_recipes count
+    recipe[0].total_recipes = 0;
+
+    int choice;
+    do {
+        printf("\n::----------  Recipe Manager  ----------::\n\n");
+        printf("\t\tMain Menu\n");
+        printf("  \t1. add a new recipe\n");
+        printf("  \t2. delete an existing recipe\n");
+        printf("  \t3. update an existing recipe\n");
+        printf("  \t4. display single recipe\n");
+        printf("  \t5. display range recipe\n");
+        printf("  \t6. display all recipe\n");
+        printf("  \t7. search for recipe\n");
+        printf("  \t0. Exit\n");
+        printf("------------------------------------------\n");
+        printf("Enter your Choice: ");
+        scanf_s("%d", &choice);
 
         char recipe_name[MAX_NAME_SIZE];
         int recipe_numb;
 
         switch (choice) {
-        case 1:         
+        case 1:
             add_recipe();
             break;
 
         case 2:
-            recipe_list();
-            printf("Enter the recipe number to delete: ");
-            scanf_s("%d", &recipe_numb);
-
-            delete_recipe(recipe_numb);
+            delete_recipe();
             break;
 
         case 3:
@@ -61,7 +61,7 @@ int main() {
             break;
 
         case 6:
-            display_all_recipe();
+            display_all_recipes();
             break;
 
         case 7:
@@ -71,10 +71,11 @@ int main() {
         case 0:
             printf("\nExiting the program...\n");
             break;
+
         default:
             printf("Invalid choice!\n");
             break;
         }
-	} while (choice != 0);
-	return 0;
+    } while (choice != 0);
+    return 0;
 }
