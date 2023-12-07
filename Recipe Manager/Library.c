@@ -160,8 +160,87 @@ void delete_recipe() {
 
 
 void update_recipe(int recipe_numb) {
-    return 0;
+    char recipe_name[MAX_NAME_SIZE];
+    FILE* recipe_list_file = fopen("recipe_list.txt", "r");
+
+    if (recipe_list_file != NULL) {
+        int current_recipe_number;
+        int total_recipes;
+        fscanf(recipe_list_file, "%d", &total_recipes);
+
+        // Check if the entered recipe number is valid
+        if (recipe_numb < 1 || recipe_numb > total_recipes) {
+            printf("\nInvalid recipe number. Please enter a valid recipe number.\n");
+            fclose(recipe_list_file);
+            return;
+        }
+
+        // Find the recipe name corresponding to the entered recipe number
+        while (fscanf(recipe_list_file, "%d %[^\n]", &current_recipe_number, recipe_name) == 2) {
+            if (current_recipe_number == recipe_numb) {
+                break;
+            }
+        }
+
+        fclose(recipe_list_file);
+
+        char filename[MAX_NAME_SIZE];
+        sprintf(filename, "%s.txt", recipe_name);
+
+        FILE* recipe_file = fopen(filename, "r");
+
+        if (recipe_file != NULL) {
+            printf("\n::----------  Current Recipe Details for %s  ----------::\n\n", recipe_name);
+
+            char recipe_steps[MAX_RECIPE_LENGTH];
+
+            // Read and print each line in the file
+            while (fgets(recipe_steps, sizeof(recipe_steps), recipe_file) != NULL) {
+                printf("%s", recipe_steps);
+            }
+
+            printf("\n::------------------------------------------------------::\n");
+            fclose(recipe_file);
+
+            // Prompt for new recipe steps
+            printf("\nEnter the updated recipe steps (enter an empty line to finish):\n");
+
+            // Open the recipe file in write mode to overwrite the existing content
+            recipe_file = fopen(filename, "w");
+
+            if (recipe_file != NULL) {
+                // Using a loop to read multiple lines of text
+                bool finished = false;
+                while (!finished) {
+                    fgets(recipe_steps, sizeof(recipe_steps), stdin);
+
+                    // to check if the line is empty (contains only newline character)
+                    if (recipe_steps[0] == '\n') {
+                        finished = true;
+                    }
+                    else {
+                        fprintf(recipe_file, "%s", recipe_steps);
+                    }
+                }
+
+                fclose(recipe_file);
+
+                printf("\nRecipe updated successfully!\n");
+            }
+            else {
+                printf("\nError updating the recipe file!\n");
+            }
+        }
+        else {
+            printf("\nError reading the current recipe file!\n");
+        }
+    }
+    else {
+        printf("\nError reading recipe_list.txt!\n");
+    }
 }
+
+
 void display_single_recipe(int recipe_numb) {
     char recipe_name[MAX_NAME_SIZE];
     FILE* recipe_list_file = fopen("recipe_list.txt", "r");

@@ -46,8 +46,10 @@ int main() {
             recipe_list();
             printf("Enter the recipe number to update: ");
             scanf_s("%d", &recipe_numb);
+            getchar(); // Consume the newline character
             update_recipe(recipe_numb);
             break;
+
 
         case 4:
             recipe_list();
