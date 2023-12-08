@@ -337,8 +337,75 @@ void display_all_recipes() {
     }
 }
 
-
-
 void search_recipe() {
-    return 0;
+    int search_number;
+    printf("Enter the recipe number to search: ");
+    scanf("%d", &search_number);
+
+    FILE* recipe_list_file = fopen("recipe_list.txt", "r");
+
+    if (recipe_list_file != NULL) {
+        int total_recipes;  // Variable to store the total count of recipes
+        int recipe_number;
+        char recipe_name[MAX_NAME_SIZE];
+
+        // Read the total count of recipes
+        fscanf(recipe_list_file, "%d", &total_recipes);
+
+        // Consume the newline character
+        fgetc(recipe_list_file);
+
+        int found = 0;  // Variable to track whether the recipe is found
+
+        // Assuming the file format is: recipe_number recipe_name
+        for (int k = 1; k <= total_recipes; ++k) {
+            if (fscanf(recipe_list_file, "%d %[^\n]", &recipe_number, recipe_name) == 2) {
+                if (recipe_number == search_number) {
+                    found = 1;  // Set found to true if the recipe is found
+
+                    // Display recipe details by reading the corresponding file
+                    char filename[MAX_NAME_SIZE];
+                    sprintf(filename, "%s.txt", recipe_name);
+                    FILE* recipefile = fopen(filename, "r");
+
+                    if (recipefile != NULL) {
+                        printf("\n::----------  Recipe Details  ----------::\n\n");
+                        printf("Recipe Number: %d\n", recipe_number);
+                        printf("Recipe Name: %s\n", recipe_name);
+                        printf("----------------------------------------\n");
+
+                        int stepcnt = 1;
+                        char recipe[MAX_RECIPE_LENGTH];
+
+                        // Read and print each line in the recipe file
+                        while (fgets(recipe, MAX_RECIPE_LENGTH, recipefile) != NULL) {
+                            printf("Step%d: %s", stepcnt, recipe);
+                            stepcnt++;
+                        }
+
+                        fclose(recipefile);
+                        printf("\n::--------------------------------------::\n");
+
+                        break;  // No need to continue searching once the recipe is found
+                    }
+                    else {
+                        printf("\nError reading recipe file!\n");
+                    }
+                }
+            }
+            else {
+                printf("\nError reading recipe_list.txt!\n");
+                break;
+            }
+        }
+
+        fclose(recipe_list_file);
+
+        if (!found) {
+            printf("\nRecipe not found.\n");
+        }
+    }
+    else {
+        printf("\nError reading recipe_list.txt!\n");
+    }
 }
