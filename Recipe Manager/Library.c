@@ -374,13 +374,11 @@ void search_recipe() {
                         printf("Recipe Name: %s\n", recipe_name);
                         printf("----------------------------------------\n");
 
-                        int stepcnt = 1;
                         char recipe[MAX_RECIPE_LENGTH];
 
                         // Read and print each line in the recipe file
                         while (fgets(recipe, MAX_RECIPE_LENGTH, recipefile) != NULL) {
-                            printf("Step%d: %s", stepcnt, recipe);
-                            stepcnt++;
+                            printf("%s", recipe);
                         }
 
                         fclose(recipefile);
